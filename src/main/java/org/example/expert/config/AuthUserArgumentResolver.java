@@ -38,9 +38,10 @@ public class AuthUserArgumentResolver implements HandlerMethodArgumentResolver {
 
         // JwtFilter 에서 set 한 userId, email, userRole 값을 가져옴
         Long userId = (Long) request.getAttribute("userId");
+        String nickname=(String) request.getAttribute("nickname");
         String email = (String) request.getAttribute("email");
         UserRole userRole = UserRole.of((String) request.getAttribute("userRole"));
 
-        return new AuthUser(userId, email, userRole);
+        return new AuthUser(userId,nickname, email, userRole);
     }
 }
