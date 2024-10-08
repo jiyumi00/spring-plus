@@ -7,8 +7,11 @@ import org.example.expert.domain.common.dto.AuthUser;
 import org.example.expert.domain.todo.dto.request.TodoSaveRequest;
 import org.example.expert.domain.todo.dto.response.TodoResponse;
 import org.example.expert.domain.todo.dto.response.TodoSaveResponse;
+import org.example.expert.domain.todo.dto.response.TodoSearchCondition;
+import org.example.expert.domain.todo.dto.response.TodoSearchResponse;
 import org.example.expert.domain.todo.service.TodoService;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,5 +43,11 @@ public class TodoController {
     @GetMapping("/todos/{todoId}")
     public ResponseEntity<TodoResponse> getTodo(@PathVariable("todoId") long todoId) {
         return ResponseEntity.ok(todoService.getTodo(todoId));
+    }
+
+    //일정 검색
+    @GetMapping("/todos/search")
+    public ResponseEntity<Page<TodoSearchResponse>> getSearchTodo(TodoSearchCondition condition, Pageable pageable){
+        return ResponseEntity.ok(todoService.getSearchTodo(condition,pageable));
     }
 }
