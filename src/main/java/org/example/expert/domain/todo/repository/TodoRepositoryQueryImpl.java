@@ -60,8 +60,8 @@ public class TodoRepositoryQueryImpl implements TodoRepositoryQuery{
                 .limit(pageable.getPageSize())
                 .fetch();
 
-        JPAQuery<Todo> countQuery=queryFactory
-                .select(todo)
+        JPAQuery<Long> countQuery=queryFactory
+                .select(todo.count())
                 .from(todo)
                 .leftJoin(todo.managers,manager)
                 .leftJoin(todo.comments,comment)
@@ -71,7 +71,7 @@ public class TodoRepositoryQueryImpl implements TodoRepositoryQuery{
                         nicknameContain(condition.getNickname())
                 );
 
-        return PageableExecutionUtils.getPage(content,pageable,countQuery::fetchCount);
+        return PageableExecutionUtils.getPage(content,pageable,countQuery::fetchOne);
 
     }
     private BooleanExpression titleContain(String title) {
