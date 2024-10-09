@@ -19,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -54,25 +55,24 @@ public class TodoService {
     }
 
 
-    public Page<TodoResponse> getTodos(String weather,String searchStartDate,String searchEndDate, int page, int size) {
+    public Page<TodoResponse> getTodos(String weather,String startDate,String endDate, int page, int size) {
         Pageable pageable = PageRequest.of(page - 1, size);
 
+        if(startDate==null || startDate.isEmpty()){
+            startDate="00010101";
+        }
+        if(endDate==null || endDate.isEmpty()){
+            endDate="99991231";
+        }
+
+        LocalDateTime startModifiedDate= LocalDate.parse(startDate, DateTimeFormatter.ofPattern("yyyyMMdd")).atTime(0,0,0);
+        LocalDateTime endModifiedDate=LocalDate.parse(endDate,DateTimeFormatter.ofPattern("yyyyMMdd")).atTime(23,59,59);
+
         Page<Todo> todos;
-
-        if(searchStartDate==null ||searchStartDate.isEmpty()){
-            searchStartDate="00010101";
-        }
-        if(searchEndDate==null || searchEndDate.isEmpty()){
-            searchEndDate="99991231";
-        }
-
-        LocalDateTime startModifiedDate=LocalDateTime.parse(searchStartDate, DateTimeFormatter.ofPattern("yyyyMMdd"));
-        LocalDateTime endModifiedDate=LocalDateTime.parse(searchEndDate,DateTimeFormatter.ofPattern("yyyyMMdd"));
-
         if(weather==null || weather.isEmpty()){
-            todos=todoRepository.findAllByOrderByModifiedAtDesc(pageable);
+            todos=todoRepository.findAllByOrderByModifiedAtDesc(startModifiedDate,endModifiedDate,pageable);
         }else{
-            todos=todoRepository.findByWeatherOrderByModifiedAtDesc(weather,pageable);
+            todos=todoRepository.findByWeatherOrderByModifiedAtDesc(weather,startModifiedDate,endModifiedDate,pageable);
         }
 
 
