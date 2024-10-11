@@ -37,6 +37,6 @@
 <br/><br />
 ## ⚠️ 트러블 슈팅 
 <p>
-<a href="https://jiyumi00.tistory.com/99" target="_blank">트러블 슈팅 기록</a>
+<a href="https://jiyumi00.tistory.com/107" target="_blank">트러블 슈팅 기록</a>
 </p>
 <br/><br /><br />
