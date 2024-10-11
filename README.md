@@ -32,3 +32,11 @@
     3. JPQL로 작성된 일정 조회에서 findByIdWithUser를 QueryDSL로 변경
     4. Filter와 Argument Resolver를 사용했던 코드를 SpringSecurity로 변경
     5. 대용량 데이터 처리 조회 속도 개선
+
+
+
+## ⚠️ 트러블 슈팅 
+<p>
+<a href="https://jiyumi00.tistory.com/99" target="_blank">트러블 슈팅 기록</a>
+</p>
+<br/><br /><br />
